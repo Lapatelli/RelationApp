@@ -44,7 +44,6 @@ namespace RelationApp.Infrastructure.Configurations
             builder.Property(e => e.CreatedAt).HasColumnType("datetime");
 
             builder.Property(e => e.CreatedBy)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
 

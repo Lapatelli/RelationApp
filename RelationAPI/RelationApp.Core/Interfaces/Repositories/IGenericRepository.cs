@@ -7,12 +7,10 @@ namespace RelationApp.Core.Interfaces.Repositories
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
 
-        void Add(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
 
         void Update(TEntity entity);
 
         void Delete(TEntity entity);
-
-        IEnumerable<TEntity> Sorting(IEnumerable<TEntity> entities, string sortedProp, bool ascending);
     }
 }

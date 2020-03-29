@@ -10,7 +10,5 @@ namespace RelationApp.Core.Interfaces.Repositories
         Task<IEnumerable<Relation>> GetRelationWithAddressAsync();
 
         Task<IEnumerable<Relation>> GetRelationWithAddressByCategoryAsync(Guid? categoryId);
-
-        Task<IEnumerable<Relation>> GetSortedRelationWithAddressByCategoryAsync(Guid? categoryId, string sortedProp,bool ascending);
     }
 }

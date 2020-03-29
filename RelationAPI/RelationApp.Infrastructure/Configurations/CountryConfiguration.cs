@@ -8,9 +8,11 @@ namespace RelationApp.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Country> builder)
         {
-            builder.HasNoKey();
-
             builder.ToTable("tblCountry");
+
+            builder.HasKey(e => e.Id);
+
+            builder.HasMany(e => e.RelationAddress).WithOne(e => e.Country);
 
             builder.Property(e => e.CreatedAt).HasColumnType("datetime");
 

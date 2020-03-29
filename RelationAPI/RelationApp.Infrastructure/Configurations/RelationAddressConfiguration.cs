@@ -14,6 +14,8 @@ namespace RelationApp.Infrastructure.Configurations
 
             builder.HasOne(e => e.Relation).WithOne(e => e.RelationAddress);
 
+            builder.HasOne(e => e.Country).WithMany(e => e.RelationAddress);
+
             builder.Property(e => e.Building)
                 .HasMaxLength(255)
                 .IsUnicode(false);

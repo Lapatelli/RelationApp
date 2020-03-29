@@ -3,7 +3,7 @@
 
 namespace RelationApp.Core.Interfaces.Repositories
 {
-    public interface ICategoryRepository : IGenericRepository<Category>
+    public interface IRelationCategoryRepository : IGenericRepository<RelationCategory>
     {
 
     }

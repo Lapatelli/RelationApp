@@ -6,11 +6,13 @@ namespace RelationApp.Core.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        public ICategoryRepository CategoryRepository { get; set; }
+        public IRelationCategoryRepository RelationCategoryRepository { get; set; }
 
         public IRelationRepository RelationRepository { get; set; }
 
         public IRelationAddressRepository RelationAddressRepository { get; set; }
+
+        public ICountryRepository CountryRepository { get; set; }
 
         Task<int> CommitAsync();
     }

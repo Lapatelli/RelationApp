@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace RelationApp.Core.Entities
 {
@@ -14,6 +15,7 @@ namespace RelationApp.Core.Entities
         public string Province { get; set; }
         public string Building { get; set; }
         public string PostalCode { get; set; }
+        public Country Country { get; set; }
         public Guid? CountryId { get; set; }
         public string CountryName { get; set; }
         public double? Longitude { get; set; }

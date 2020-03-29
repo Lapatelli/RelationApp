@@ -29,10 +29,14 @@ namespace RelationApp.Web
             services.AddDbContext<RelationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            services.AddScoped<IRelationCategoryRepository, RelationCategoryRepository>();
             services.AddScoped<IRelationAddressRepository, RelationAddressRepository>();
             services.AddScoped<IRelationRepository, RelationRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+
             services.AddScoped<IRelationService, RelationService>();
+            services.AddScoped<IRelationAddressService, RelationAddressService>();
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RelationApp.Core.Interfaces.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RelationApp.Infrastructure.Repositories
@@ -24,31 +23,21 @@ namespace RelationApp.Infrastructure.Repositories
             return entities;
         }
 
-        public void Add(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            //DbSet.AddAsync(entity);
-            Сontext.Entry(entity).State = EntityState.Added;
+            await DbSet.AddAsync(entity);
+
+            return entity;
         }
 
         public void Delete(TEntity entity)
         {
-            //DbSet.Remove(entity);
             Сontext.Entry(entity).State = EntityState.Deleted;
         }
 
         public void Update(TEntity entity)
         {
             Сontext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public virtual IEnumerable<TEntity> Sorting(IEnumerable<TEntity> entities, string sortedProp, bool ascending)
-        {
-            var propertyInfo = typeof(TEntity).GetProperty(sortedProp);
-
-            var result = ascending ? entities.OrderBy(sort => propertyInfo.GetValue(sort)).ToList() :
-                                     entities.OrderByDescending(sort => propertyInfo.GetValue(sort)).ToList();
-
-            return result;
         }
     }
 }
