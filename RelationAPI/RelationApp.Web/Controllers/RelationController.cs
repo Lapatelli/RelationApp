@@ -35,6 +35,11 @@ namespace RelationApp.Web.Controllers
             return Ok(resultSortedRelations);
         }
 
+        /// <summary>
+        /// RandomCategoryId is added for Unit-Tests. After creating UI, there will be Dropdown menu to choose right category
+        /// </summary>
+        /// <param name="createRelationViewModel"></param>
+        /// <returns></returns>
         [HttpPost("create")]
         [ProducesResponseType(200)]
         public async Task<IActionResult> CreateRelation([FromBody]CreateRelationViewModel createRelationViewModel)

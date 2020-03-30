@@ -7,14 +7,11 @@ namespace RelationApp.Infrastructure.Repositories
 {
     public class CountryRepository : GenericRepository<Country>, ICountryRepository
     {
-        public CountryRepository(RelationDBContext context) : base(context)
-        {
+        public CountryRepository(RelationDBContext context) : base(context) { }
 
-        }
-
-        public async Task<Country> GetPostalCodeByCountryName(string CountryName)
+        public async Task<Country> GetPostalCodeByCountryName(string countryName)
         {
-            return await DbSet.FirstOrDefaultAsync(x => x.Name == CountryName);
+            return await DbSet.FirstOrDefaultAsync(x => x.Name == countryName);
         }
     }
 }

@@ -6,9 +6,6 @@ namespace RelationApp.Infrastructure.Repositories
 {
     public class RelationCategoryRepository : GenericRepository<RelationCategory>, IRelationCategoryRepository
     {
-        public RelationCategoryRepository(RelationDBContext context) : base(context)
-        {
-
-        }
+        public RelationCategoryRepository(RelationDBContext context) : base(context) { }
     }
 }

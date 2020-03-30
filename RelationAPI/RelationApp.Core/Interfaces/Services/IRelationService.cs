@@ -10,7 +10,5 @@ namespace RelationApp.Core.Interfaces.Services
         Task<IEnumerable<Relation>> GetSortedRelationsByCategotyIdAsync(Guid? categoryId, string sortedProp, bool descending);
 
         Task<Relation> CreateRelationAsync(Relation relation,RelationAddress relationAddress, RelationCategory relationCategory);
-
-        IEnumerable<Relation> Sorting(IEnumerable<Relation> entities, string sortedProp, bool descending);
     }
 }

@@ -8,10 +8,7 @@ namespace RelationApp.Infrastructure.Repositories
 {
     public class RelationAddressRepository : GenericRepository<RelationAddress>, IRelationAddressRepository
     {
-        public RelationAddressRepository(RelationDBContext context) : base(context)
-        {
-
-        }
+        public RelationAddressRepository(RelationDBContext context) : base(context) { }
 
         public async Task<RelationAddress> GetByRelationIdAsync(Guid Id)
         {
