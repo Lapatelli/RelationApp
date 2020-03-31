@@ -45,7 +45,7 @@ namespace RelationApp.Web.Mapper
                     City = src.model.City,
                     PostalCode = src.model.PostalCode,
                     Street = src.model.Street,
-                    Number = int.Parse(src.model.StreetNumber)
+                    Number = src.model.StreetNumber
                 });
 
             CreateMap<(Relation relation, Guid categoryId), RelationCategory>()
@@ -81,7 +81,7 @@ namespace RelationApp.Web.Mapper
                     City = src.model.City,
                     PostalCode = src.model.PostalCode,
                     Street = src.model.Street,
-                    Number = int.Parse(src.model.StreetNumber)
+                    Number = src.model.StreetNumber
                 });
         }
     }

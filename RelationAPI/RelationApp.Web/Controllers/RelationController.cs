@@ -5,10 +5,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RelationApp.Core.Entities;
 using RelationApp.Core.Interfaces.Services;
+using RelationApp.Web.Validation;
 using RelationApp.Web.ViewModels;
 
 namespace RelationApp.Web.Controllers
 {
+    [Produces("application/json")]
     [Route("relations/")]
     [ApiController]
     public class RelationController : ControllerBase
@@ -28,6 +30,8 @@ namespace RelationApp.Web.Controllers
         [HttpGet, Route("")]
         public async Task<IActionResult> GetSortedAllCategoryRelationsAsync([FromQuery] Guid? categoryId, string propertyForSorting, bool descending)
         {
+            SortingPropertyValidation.ValidateProperty(propertyForSorting);
+
             var relationsSorted = await _relationService.GetSortedRelationsByCategotyIdAsync(categoryId, propertyForSorting, descending);
 
             var relationsSortedViewModel = _mapper.Map<IEnumerable<Relation>, IEnumerable<GetRelationViewModel>>(relationsSorted);
@@ -42,7 +46,7 @@ namespace RelationApp.Web.Controllers
         /// <returns></returns>
         [HttpPost("create")]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> CreateRelation([FromBody]CreateRelationViewModel createRelationViewModel)
+        public async Task<IActionResult> CreateRelationAsync([FromBody] CreateRelationViewModel createRelationViewModel)
         {
             var randomCategoryLastNumber = _random.Next(1, 8).ToString();
             var randomCategoryId = Guid.Parse($"00000000-0000-0000-0000-00000000000{randomCategoryLastNumber}");
@@ -60,7 +64,7 @@ namespace RelationApp.Web.Controllers
 
         [HttpPut("update/{relationId}")]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> UpdateRelation([FromRoute] Guid relationId,[FromBody] UpdateRelationViewModel updateRelationViewModel)
+        public async Task<IActionResult> UpdateRelationAsync([FromRoute] Guid relationId,[FromBody] UpdateRelationViewModel updateRelationViewModel)
         {
             var relation = _mapper.Map<(UpdateRelationViewModel, Guid), Relation>((updateRelationViewModel, relationId));
             var relationAddress = _mapper.Map<(UpdateRelationViewModel, Guid), RelationAddress>((updateRelationViewModel, relationId));
@@ -74,7 +78,7 @@ namespace RelationApp.Web.Controllers
 
         [HttpDelete("delete")]
         [ProducesResponseType(204)]
-        public async Task<IActionResult> DeleteRelation([FromBody]IEnumerable<DeleteRelationViewModel> deleteRelationViewModel)
+        public async Task<IActionResult> DeleteRelationAsync([FromBody]IEnumerable<DeleteRelationViewModel> deleteRelationViewModel)
         {
             var relationsToDelete = _mapper.Map<IEnumerable<DeleteRelationViewModel>, IEnumerable<Relation>>(deleteRelationViewModel);
 

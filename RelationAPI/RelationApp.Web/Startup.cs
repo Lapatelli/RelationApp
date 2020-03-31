@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ using RelationApp.Core.Interfaces.Repositories;
 using RelationApp.Core.Interfaces.Services;
 using RelationApp.Infrastructure;
 using RelationApp.Infrastructure.Repositories;
+using RelationApp.Web.Middleware;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RelationApp.Web
 {
@@ -39,7 +42,7 @@ namespace RelationApp.Web
             services.AddScoped<IRelationAddressService, RelationAddressService>();
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddSwaggerGen(options =>
             {
@@ -48,6 +51,8 @@ namespace RelationApp.Web
                     Version = "v1",
                     Title = "Test API"
                 });
+
+                options.AddFluentValidationRules();
             });
         }
 
@@ -58,6 +63,8 @@ namespace RelationApp.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
 
