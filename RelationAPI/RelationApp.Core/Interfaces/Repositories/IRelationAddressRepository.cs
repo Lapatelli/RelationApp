@@ -6,6 +6,6 @@ namespace RelationApp.Core.Interfaces.Repositories
 {
     public interface IRelationAddressRepository : IGenericRepository<RelationAddress>
     {
-        Task<RelationAddress> GetByRelationIdAsync(Guid Id);
+        Task<RelationAddress> GetAddressByRelationIdAsync(Guid Id);
     }
 }

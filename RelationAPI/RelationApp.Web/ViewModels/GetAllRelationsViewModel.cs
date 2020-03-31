@@ -2,7 +2,7 @@
 
 namespace RelationApp.Web.ViewModels
 {
-    public class GetAllRelationsViewModel
+    public class GetRelationViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -12,6 +12,7 @@ namespace RelationApp.Web.ViewModels
         public string Country { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
-        public string StreetNumber { get; set; }
+        public string Street { get; set; }
+        public int? StreetNumber { get; set; }
     }
 }

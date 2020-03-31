@@ -26,13 +26,13 @@ namespace RelationApp.Web.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<IActionResult> GetSortedAllCategoryRelationsAsync([FromQuery] Guid? categoryId, string sortedProp, bool descending)
+        public async Task<IActionResult> GetSortedAllCategoryRelationsAsync([FromQuery] Guid? categoryId, string propertyForSorting, bool descending)
         {
-            var sortedRelations = await _relationService.GetSortedRelationsByCategotyIdAsync(categoryId, sortedProp, descending);
+            var relationsSorted = await _relationService.GetSortedRelationsByCategotyIdAsync(categoryId, propertyForSorting, descending);
 
-            var resultSortedRelations = _mapper.Map<IEnumerable<Relation>, IEnumerable<GetAllRelationsViewModel>>(sortedRelations);
+            var relationsSortedViewModel = _mapper.Map<IEnumerable<Relation>, IEnumerable<GetRelationViewModel>>(relationsSorted);
 
-            return Ok(resultSortedRelations);
+            return Ok(relationsSortedViewModel);
         }
 
         /// <summary>
@@ -47,15 +47,40 @@ namespace RelationApp.Web.Controllers
             var randomCategoryLastNumber = _random.Next(1, 8).ToString();
             var randomCategoryId = Guid.Parse($"00000000-0000-0000-0000-00000000000{randomCategoryLastNumber}");
 
-            var relationModel = _mapper.Map<CreateRelationViewModel, Relation>(createRelationViewModel);
-            var relationAddressModel = _mapper.Map<(CreateRelationViewModel,Relation), RelationAddress>((createRelationViewModel, relationModel));
-            var relationCategoryModel = _mapper.Map<(Relation,Guid), RelationCategory>((relationModel,randomCategoryId));
+            var relation = _mapper.Map<CreateRelationViewModel, Relation>(createRelationViewModel);
+            var relationAddress = _mapper.Map<(CreateRelationViewModel,Relation), RelationAddress>((createRelationViewModel, relation));
+            var relationCategory = _mapper.Map<(Relation,Guid), RelationCategory>((relation, randomCategoryId));
 
-            var relationAdded = await _relationService.CreateRelationAsync(relationModel, relationAddressModel, relationCategoryModel);
+            var relationCreated = await _relationService.CreateRelationAsync(relation, relationAddress, relationCategory);
 
-            var entitiesAdded = _mapper.Map<Relation, GetAllRelationsViewModel>(relationAdded);
+            var relationCreatedViewModel = _mapper.Map<Relation, GetRelationViewModel>(relationCreated);
 
-            return Ok(entitiesAdded);
+            return Ok(relationCreatedViewModel);
+        }
+
+        [HttpPut("update/{relationId}")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> UpdateRelation([FromRoute] Guid relationId,[FromBody] UpdateRelationViewModel updateRelationViewModel)
+        {
+            var relation = _mapper.Map<(UpdateRelationViewModel, Guid), Relation>((updateRelationViewModel, relationId));
+            var relationAddress = _mapper.Map<(UpdateRelationViewModel, Guid), RelationAddress>((updateRelationViewModel, relationId));
+
+            var relationUpdated = await _relationService.UpdateRelationById(relation, relationAddress);
+
+            var relationUpdatedViewModel = _mapper.Map<Relation, GetRelationViewModel>(relationUpdated);
+
+            return Ok(relationUpdatedViewModel);
+        }
+
+        [HttpDelete("delete")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> DeleteRelation([FromBody]IEnumerable<DeleteRelationViewModel> deleteRelationViewModel)
+        {
+            var relationsToDelete = _mapper.Map<IEnumerable<DeleteRelationViewModel>, IEnumerable<Relation>>(deleteRelationViewModel);
+
+            await _relationService.DeleteCertainRelationsByMakingDisabled(relationsToDelete);
+
+            return NoContent();
         }
     }
 }

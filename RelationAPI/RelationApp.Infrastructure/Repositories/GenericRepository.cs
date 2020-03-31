@@ -37,7 +37,7 @@ namespace RelationApp.Infrastructure.Repositories
 
         public void Update(TEntity entity)
         {
-            Сontext.Entry(entity).State = EntityState.Modified;
+            DbSet.Update(entity).State = EntityState.Modified;
         }
     }
 }

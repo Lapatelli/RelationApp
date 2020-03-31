@@ -21,4 +21,8 @@
     <ProjectReference Include="..\RelationApp.Infrastructure\RelationApp.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validation\" />
+  </ItemGroup>
+
 </Project>

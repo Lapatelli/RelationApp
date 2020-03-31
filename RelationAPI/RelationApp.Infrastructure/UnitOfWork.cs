@@ -10,7 +10,7 @@ namespace RelationApp.Infrastructure
         private readonly RelationDBContext _context;
         private bool disposed;
 
-        public UnitOfWork(IRelationCategoryRepository relationCategoryRepository, IRelationRepository relationRepository, 
+        public UnitOfWork(IRelationCategoryRepository relationCategoryRepository, IRelationRepository relationRepository,
             IRelationAddressRepository relationAddressRepository, RelationDBContext context, ICountryRepository countryRepository)
         {
             RelationCategoryRepository = relationCategoryRepository;

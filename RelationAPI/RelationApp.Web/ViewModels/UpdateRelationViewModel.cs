@@ -1,6 +1,7 @@
-﻿namespace RelationApp.Web.ViewModels
+﻿
+namespace RelationApp.Web.ViewModels
 {
-    public class CreateRelationViewModel
+    public class UpdateRelationViewModel
     {
         public string Name { get; set; }
         public string FullName { get; set; }

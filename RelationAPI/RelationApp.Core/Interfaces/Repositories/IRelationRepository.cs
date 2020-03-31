@@ -7,8 +7,8 @@ namespace RelationApp.Core.Interfaces.Repositories
 {
     public interface IRelationRepository : IGenericRepository<Relation>
     {
-        Task<IEnumerable<Relation>> GetRelationsByCategoryAsync(Guid? categoryId);
+        Task<Relation> GetRelationByIdAsync(Guid? relationId);
 
-        Task<IEnumerable<Relation>> GetSortedRelationsInCertainCategoryAsync(Guid? categoryId, string sortedProp, bool descending);
+        Task<IEnumerable<Relation>> GetSortedRelationsInCertainCategoryAsync(Guid? categoryId, string propertyForSorting, bool descending);
     }
 }

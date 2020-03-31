@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using RelationApp.Core.Shared;
 
 namespace RelationApp.Infrastructure.Repositories
 {
@@ -12,54 +13,25 @@ namespace RelationApp.Infrastructure.Repositories
     {
         public RelationRepository(RelationDBContext context) : base(context) { }
 
-        public async Task<IEnumerable<Relation>> GetRelationsByCategoryAsync(Guid? categoryId)
+        public async Task<Relation> GetRelationByIdAsync(Guid? relationId)
         {
-            var entities = categoryId != null
-                ? await DbSet.Include(x => x.RelationCategory).Where(x => x.RelationCategory.CategoryId == categoryId)
-                    .Include(x => x.RelationAddress).ToListAsync()
-                : await DbSet.Include(x => x.RelationAddress).ToListAsync();
+            var entity = await DbSet.FirstOrDefaultAsync(e => e.Id == relationId);
 
-            return entities;
+            return entity;
         }
 
-        public async Task<IEnumerable<Relation>> GetSortedRelationsInCertainCategoryAsync(Guid? categoryId, string sortedProp, bool descending)
+        public async Task<IEnumerable<Relation>> GetSortedRelationsInCertainCategoryAsync(Guid? categoryId, string propertyForSorting, bool descending)
         {
-            IQueryable<Relation> query = DbSet.Include(x => x.RelationAddress);
+            IQueryable<Relation> query = categoryId != null
+                ? DbSet.Where(x => !x.IsDisabled).Include(x => x.RelationAddress)
+                    .Include(x => x.RelationCategory).Where(x => x.RelationCategory.CategoryId == categoryId)
+                : DbSet.Where(x => !x.IsDisabled).Include(x => x.RelationAddress);
 
-            Func<Relation, object> sortedFunc = (relation) =>
-            {
-                if (!string.IsNullOrEmpty(sortedProp))
-                {
-                    object o = typeof(Relation).GetProperty(sortedProp) != null
-                        ? relation
-                        : (object)relation.RelationAddress;
+            query = SortingDynamic.SortDynamically(query, propertyForSorting, descending);
 
-                    return GetSortedValue(o, sortedProp);
-                }
+            var entitiesSorted = await query.ToListAsync();
 
-                return relation.Name;
-            };
-
-            if (categoryId != null)
-            {
-                query = descending
-                    ? query.Include(x => x.RelationCategory).Where(x => x.RelationCategory.CategoryId == categoryId)
-                        .OrderByDescending(sortedFunc).AsQueryable()
-                    : query.Include(x => x.RelationCategory).Where(x => x.RelationCategory.CategoryId == categoryId)
-                        .OrderBy(sortedFunc).AsQueryable();
-            }
-            else
-            {
-                query = descending
-                    ? query.OrderByDescending(sortedFunc).AsQueryable()
-                    : query.OrderBy(sortedFunc).AsQueryable();
-            }
-
-            var sortedEntities = await query.ToListAsync();
-            
-            return sortedEntities;
-
-            object GetSortedValue(object obj, string propName) => obj.GetType().GetProperty(propName).GetValue(obj);
+            return entitiesSorted;
         }
     }
 }
