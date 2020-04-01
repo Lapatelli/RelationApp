@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RelationApp.Core", "Relatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RelationApp.Infrastructure", "RelationApp.Infrastructure\RelationApp.Infrastructure.csproj", "{79AE790A-5CDD-41CA-8FBC-B4F77D94F6C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelationApp.Tests", "RelationApp.Tests\RelationApp.Tests.csproj", "{C0C25A5B-C422-4BE5-9C90-6D736CEC2E20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{79AE790A-5CDD-41CA-8FBC-B4F77D94F6C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79AE790A-5CDD-41CA-8FBC-B4F77D94F6C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79AE790A-5CDD-41CA-8FBC-B4F77D94F6C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C25A5B-C422-4BE5-9C90-6D736CEC2E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C25A5B-C422-4BE5-9C90-6D736CEC2E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C25A5B-C422-4BE5-9C90-6D736CEC2E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C25A5B-C422-4BE5-9C90-6D736CEC2E20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

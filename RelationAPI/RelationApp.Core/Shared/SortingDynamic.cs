@@ -6,6 +6,14 @@ namespace RelationApp.Core.Shared
 {
     public static class SortingDynamic
     {
+        /// <summary>
+        /// Add to received <paramref name="query"/> Linq Method for Ordering by ascending or descending (depends on <paramref name="descending"/>).
+        /// </summary>
+        /// <typeparam name="Relation"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="propertyForSorting"></param>
+        /// <param name="descending"></param>
+        /// <returns></returns>
         public static IOrderedQueryable<Relation> SortDynamically<Relation>(IQueryable<Relation> query, string propertyForSorting, bool descending)
         {
             string propertyValidForSorting = string.IsNullOrEmpty(propertyForSorting) ? "Name" : propertyForSorting;

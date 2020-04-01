@@ -27,6 +27,13 @@ namespace RelationApp.Web.Controllers
             _random = new Random();
         }
 
+        /// <summary>
+        /// Returns sorted relation collection by ascending or descending which is not Disabled and belongs to certain category
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="propertyForSorting"></param>
+        /// <param name="descending"></param>
+        /// <returns></returns>
         [HttpGet, Route("")]
         public async Task<IActionResult> GetSortedAllCategoryRelationsAsync([FromQuery] Guid? categoryId, string propertyForSorting, bool descending)
         {
@@ -40,6 +47,7 @@ namespace RelationApp.Web.Controllers
         }
 
         /// <summary>
+        /// Create relation instance in a database, herewith adding information in all related tables.
         /// RandomCategoryId is added for Unit-Tests. After creating UI, there will be Dropdown menu to choose right category
         /// </summary>
         /// <param name="createRelationViewModel"></param>
@@ -62,6 +70,12 @@ namespace RelationApp.Web.Controllers
             return Ok(relationCreatedViewModel);
         }
 
+        /// <summary>
+        /// Update relation instance in a database by relation Id herewith updating information in all related tables.
+        /// </summary>
+        /// <param name="relationId"></param>
+        /// <param name="updateRelationViewModel"></param>
+        /// <returns></returns>
         [HttpPut("update/{relationId}")]
         [ProducesResponseType(200)]
         public async Task<IActionResult> UpdateRelationAsync([FromRoute] Guid relationId,[FromBody] UpdateRelationViewModel updateRelationViewModel)
@@ -76,6 +90,11 @@ namespace RelationApp.Web.Controllers
             return Ok(relationUpdatedViewModel);
         }
 
+        /// <summary>
+        /// Update relation instance in a database by making field IsDisabled = true. Thereby it becomes unavailable for usage.
+        /// </summary>
+        /// <param name="deleteRelationViewModel"></param>
+        /// <returns></returns>
         [HttpDelete("delete")]
         [ProducesResponseType(204)]
         public async Task<IActionResult> DeleteRelationAsync([FromBody]IEnumerable<DeleteRelationViewModel> deleteRelationViewModel)
