@@ -5,41 +5,105 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RelationApp.Core.Entities;
 using RelationApp.Core.Interfaces.Services;
+using RelationApp.Web.Validation;
 using RelationApp.Web.ViewModels;
 
 namespace RelationApp.Web.Controllers
 {
+    [Produces("application/json")]
     [Route("relations/")]
     [ApiController]
     public class RelationController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IRelationService _relationService;
+        private readonly Random _random;
 
         public RelationController(IMapper mapper, IRelationService relationService)
         {
             _mapper = mapper;
             _relationService = relationService;
+
+            _random = new Random();
         }
 
+        /// <summary>
+        /// Returns sorted relation collection by ascending or descending which is not Disabled and belongs to certain category
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="propertyForSorting"></param>
+        /// <param name="descending"></param>
+        /// <returns></returns>
         [HttpGet, Route("")]
-        public async Task<IActionResult> GetAllCategoryRelationsAsync([FromQuery] Guid? categoryId)
+        public async Task<IActionResult> GetSortedAllCategoryRelationsAsync([FromQuery] Guid? categoryId, string propertyForSorting, bool descending)
         {
-            var relations = categoryId != null ? await _relationService.GetRelationsByCategotyIdAsync(categoryId) : await _relationService.GetAllRelationsAsync();
+            SortingPropertyValidation.ValidateProperty(propertyForSorting);
 
-            var resultRelation = _mapper.Map<IEnumerable<Relation>, IEnumerable<GetAllRelationsViewModel>>(relations);
+            var relationsSorted = await _relationService.GetSortedRelationsByCategotyIdAsync(categoryId, propertyForSorting, descending);
 
-            return Ok(resultRelation);
+            var relationsSortedViewModel = _mapper.Map<IEnumerable<Relation>, IEnumerable<GetRelationViewModel>>(relationsSorted);
+
+            return Ok(relationsSortedViewModel);
         }
 
-        [HttpGet, Route("SortBy{sortedProp}")]
-        public async Task<IActionResult> GetSortedAllCategoryRelationsAsync([FromQuery] Guid? categoryId,string sortedProp, bool ascending)
+        /// <summary>
+        /// Create relation instance in a database, herewith adding information in all related tables.
+        /// RandomCategoryId is added for Unit-Tests. After creating UI, there will be Dropdown menu to choose right category
+        /// </summary>
+        /// <param name="createRelationViewModel"></param>
+        /// <returns></returns>
+        [HttpPost("create")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> CreateRelationAsync([FromBody] CreateRelationViewModel createRelationViewModel)
         {
-            var sortedRelations = await _relationService.GetSortedRelationsByCategotyIdAsync(categoryId, sortedProp, ascending);
+            var randomCategoryLastNumber = _random.Next(1, 8).ToString();
+            var randomCategoryId = Guid.Parse($"00000000-0000-0000-0000-00000000000{randomCategoryLastNumber}");
 
-            var resultSortedRelations = _mapper.Map<IEnumerable<Relation>, IEnumerable<GetAllRelationsViewModel>>(sortedRelations);
+            var relation = _mapper.Map<CreateRelationViewModel, Relation>(createRelationViewModel);
+            var relationAddress = _mapper.Map<(CreateRelationViewModel,Relation), RelationAddress>((createRelationViewModel, relation));
+            var relationCategory = _mapper.Map<(Relation,Guid), RelationCategory>((relation, randomCategoryId));
 
-            return Ok(resultSortedRelations);
+            var relationCreated = await _relationService.CreateRelationAsync(relation, relationAddress, relationCategory);
+
+            var relationCreatedViewModel = _mapper.Map<Relation, GetRelationViewModel>(relationCreated);
+
+            return Ok(relationCreatedViewModel);
+        }
+
+        /// <summary>
+        /// Update relation instance in a database by relation Id herewith updating information in all related tables.
+        /// </summary>
+        /// <param name="relationId"></param>
+        /// <param name="updateRelationViewModel"></param>
+        /// <returns></returns>
+        [HttpPut("update/{relationId}")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> UpdateRelationAsync([FromRoute] Guid relationId,[FromBody] UpdateRelationViewModel updateRelationViewModel)
+        {
+            var relation = _mapper.Map<(UpdateRelationViewModel, Guid), Relation>((updateRelationViewModel, relationId));
+            var relationAddress = _mapper.Map<(UpdateRelationViewModel, Guid), RelationAddress>((updateRelationViewModel, relationId));
+
+            var relationUpdated = await _relationService.UpdateRelationById(relation, relationAddress);
+
+            var relationUpdatedViewModel = _mapper.Map<Relation, GetRelationViewModel>(relationUpdated);
+
+            return Ok(relationUpdatedViewModel);
+        }
+
+        /// <summary>
+        /// Update relation instance in a database by making field IsDisabled = true. Thereby it becomes unavailable for usage.
+        /// </summary>
+        /// <param name="deleteRelationViewModel"></param>
+        /// <returns></returns>
+        [HttpDelete("delete")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> DeleteRelationAsync([FromBody]IEnumerable<DeleteRelationViewModel> deleteRelationViewModel)
+        {
+            var relationsToDelete = _mapper.Map<IEnumerable<DeleteRelationViewModel>, IEnumerable<Relation>>(deleteRelationViewModel);
+
+            await _relationService.DeleteCertainRelationsByMakingDisabled(relationsToDelete);
+
+            return NoContent();
         }
     }
 }

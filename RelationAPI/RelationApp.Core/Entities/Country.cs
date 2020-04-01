@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RelationApp.Core.Entities
 {
@@ -12,6 +13,7 @@ namespace RelationApp.Core.Entities
         public bool IsDisabled { get; set; }
         public bool IsDefault { get; set; }
         public string Name { get; set; }
+        public IEnumerable<RelationAddress> RelationAddress { get; set; }
         public string Description { get; set; }
         public string Iso31662 { get; set; }
         public string Iso31663 { get; set; }

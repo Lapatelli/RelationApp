@@ -7,10 +7,12 @@ namespace RelationApp.Core.Interfaces.Services
 {
     public interface IRelationService
     {
-        Task<IEnumerable<Relation>> GetAllRelationsAsync();
+        Task<IEnumerable<Relation>> GetSortedRelationsByCategotyIdAsync(Guid? categoryId, string propertyForSorting, bool descending);
 
-        Task<IEnumerable<Relation>> GetRelationsByCategotyIdAsync(Guid? categoryId);
+        Task<Relation> CreateRelationAsync(Relation relation,RelationAddress relationAddress, RelationCategory relationCategory);
 
-        Task<IEnumerable<Relation>> GetSortedRelationsByCategotyIdAsync(Guid? categoryId, string sortedProp, bool ascending);
+        Task DeleteCertainRelationsByMakingDisabled(IEnumerable<Relation> relations);
+
+        Task<Relation> UpdateRelationById(Relation relation, RelationAddress relationAddress);
     }
 }

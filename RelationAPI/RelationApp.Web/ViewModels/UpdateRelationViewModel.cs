@@ -1,10 +1,8 @@
-﻿using System;
-
+﻿
 namespace RelationApp.Web.ViewModels
 {
-    public class GetRelationViewModel
+    public class UpdateRelationViewModel
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string FullName { get; set; }
         public string TelephoneNumber { get; set; }

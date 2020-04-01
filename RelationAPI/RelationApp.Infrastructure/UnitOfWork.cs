@@ -10,18 +10,20 @@ namespace RelationApp.Infrastructure
         private readonly RelationDBContext _context;
         private bool disposed;
 
-        public UnitOfWork(ICategoryRepository categoryRepository, IRelationRepository relationRepository, 
-            IRelationAddressRepository relationAddressRepository, RelationDBContext context)
+        public UnitOfWork(IRelationCategoryRepository relationCategoryRepository, IRelationRepository relationRepository,
+            IRelationAddressRepository relationAddressRepository, RelationDBContext context, ICountryRepository countryRepository)
         {
-            CategoryRepository = categoryRepository;
+            RelationCategoryRepository = relationCategoryRepository;
             RelationRepository = relationRepository;
             RelationAddressRepository = relationAddressRepository;
+            CountryRepository = countryRepository;
             _context = context;
         }
 
         public IRelationRepository RelationRepository { get; set; }
         public IRelationAddressRepository RelationAddressRepository { get; set; }
-        public ICategoryRepository CategoryRepository { get; set; }
+        public IRelationCategoryRepository RelationCategoryRepository { get; set; }
+        public ICountryRepository CountryRepository { get; set; }
 
         public async Task<int> CommitAsync()
         {
