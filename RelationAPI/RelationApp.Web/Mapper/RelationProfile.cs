@@ -17,7 +17,7 @@ namespace RelationApp.Web.Mapper
                     FullName = src.FullName,
                     TelephoneNumber = src.TelephoneNumber,
                     EmailAddress = src.EmailAddress,
-                    Country = src.RelationAddress.CountryName,
+                    CountryName = src.RelationAddress.CountryName,
                     City = src.RelationAddress.City,
                     PostalCode = src.RelationAddress.PostalCode,
                     Street = src.RelationAddress.Street,

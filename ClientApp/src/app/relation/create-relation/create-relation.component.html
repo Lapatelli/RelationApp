@@ -1,0 +1,43 @@
+<form [formGroup]="newRelationFormModel" class="top-indent" autocomplete="off" (submit)="onCreate()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Name</label>
+        <input class="form-control" formControlName="Name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>FullName</label>
+      <input class="form-control" formControlName="FullName">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label>TelephoneNumber</label>
+        <input class="form-control" formControlName="TelephoneNumber">
+      </div>
+      <div class="form-group col-md-3">
+        <label>EmailAddress</label>
+        <input class="form-control" formControlName="EmailAddress">
+      </div>
+      <div class="form-group col-md-3">
+        <label>Country</label>
+        <input class="form-control" formControlName="Country">
+      </div>
+      <div class="form-group col-md-3">
+        <label>City</label>
+        <input class="form-control" formControlName="City">
+      </div>
+      <div class="form-group col-md-3">
+        <label>PostalCode</label>
+        <input class="form-control" formControlName="PostalCode">
+      </div>
+      <div class="form-group col-md-3">
+        <label>Street</label>
+        <input class="form-control" formControlName="Street">
+      </div>
+      <div class="form-group col-md-3">
+        <label>StreetNumber</label>
+        <input type="number" class="form-control" formControlName="StreetNumber">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-lg">Create</button>
+  </form>

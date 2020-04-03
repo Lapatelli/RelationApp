@@ -95,7 +95,7 @@ namespace RelationApp.Web.Controllers
         /// </summary>
         /// <param name="deleteRelationViewModel"></param>
         /// <returns></returns>
-        [HttpDelete("delete")]
+        [HttpPut("delete")]
         [ProducesResponseType(204)]
         public async Task<IActionResult> DeleteRelationAsync([FromBody]IEnumerable<DeleteRelationViewModel> deleteRelationViewModel)
         {
