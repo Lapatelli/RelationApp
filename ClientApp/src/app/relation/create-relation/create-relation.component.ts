@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RelationService } from '../services/relation.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,15 +16,15 @@ export class CreateRelationComponent implements OnInit {
 
   ngOnInit(): void {
     this.newRelationFormModel = this.fb.group({
-      Name: [''],
-      FullName: [''],
-      TelephoneNumber: [''],
-      EmailAddress: [''],
-      Country: [''],
-      City: [''],
-      PostalCode: [''],
-      Street: [''],
-      StreetNumber: [''],
+      Name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      FullName: ['', [Validators.minLength(2), Validators.maxLength(100)]],
+      TelephoneNumber: ['', [Validators.minLength(2), Validators.maxLength(15)]],
+      EmailAddress: ['', [Validators.email, Validators.maxLength(50)]],
+      Country: ['', [Validators.minLength(2), Validators.maxLength(60)]],
+      City: ['', [Validators.minLength(2), Validators.maxLength(100)]],
+      PostalCode: ['', [Validators.minLength(2), Validators.maxLength(20)]],
+      Street: ['', [Validators.minLength(2), Validators.maxLength(100)]],
+      StreetNumber: ['', [Validators.minLength(2)]],
     });
 
     this.newRelationFormModel.reset();

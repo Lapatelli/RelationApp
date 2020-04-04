@@ -43,6 +43,7 @@ export class RelationListComponent implements OnInit {
       {name: 'Category_6', value: categories.Category_6},
       {name: 'Category_7', value: categories.Category_7},
       {name: 'Category_8', value: categories.Category_8},
+      {name: 'All categories', value: null}
     );
 
     this.sortedObject = {

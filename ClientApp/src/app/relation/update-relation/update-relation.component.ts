@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RelationService } from '../services/relation.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RelationModule } from '../relation.module';
 import { Relation } from 'src/app/shared/relation';
@@ -27,15 +27,15 @@ export class UpdateRelationComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateRelationFormModel = this.fb.group({
-      Name: [this.relation.name],
-      FullName: [this.relation.fullName],
-      TelephoneNumber: [this.relation.telephoneNumber],
-      EmailAddress: [this.relation.emailAddress],
-      Country: [this.relation.countryName],
-      City: [this.relation.city],
-      PostalCode: [this.relation.postalCode],
-      Street: [this.relation.street],
-      StreetNumber: [this.relation.streetNumber],
+      Name: [this.relation.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      FullName: [this.relation.fullName, [Validators.minLength(2), Validators.maxLength(100)]],
+      TelephoneNumber: [this.relation.telephoneNumber, [Validators.minLength(2), Validators.maxLength(15)]],
+      EmailAddress: [this.relation.emailAddress, [Validators.email, Validators.maxLength(50)]],
+      Country: [this.relation.countryName, [Validators.minLength(2), Validators.maxLength(60)]],
+      City: [this.relation.city, [Validators.minLength(2), Validators.maxLength(100)]],
+      PostalCode: [this.relation.postalCode, [Validators.minLength(2), Validators.maxLength(20)]],
+      Street: [this.relation.street, [Validators.minLength(2), Validators.maxLength(100)]],
+      StreetNumber: [this.relation.streetNumber, [Validators.minLength(2)]],
     });
   }
 

@@ -3,40 +3,58 @@
       <div class="form-group col-md-6">
         <label>Name</label>
         <input class="form-control" formControlName="Name">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Name').touched && updateRelationFormModel.get('Name').errors?.required">This field is mandatory</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Name').touched && updateRelationFormModel.get('Name').errors?.minlength">Minimum 2 characters</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Name').touched && updateRelationFormModel.get('Name').errors?.maxlength">Maximum 100 characters</label>
       </div>
     </div>
     <div class="form-group">
       <label>FullName</label>
       <input class="form-control" formControlName="FullName">
+      <label class="text-danger" *ngIf="updateRelationFormModel.get('FullName').touched && updateRelationFormModel.get('FullName').errors?.minlength">Minimum 2 characters</label>
+      <label class="text-danger" *ngIf="updateRelationFormModel.get('FullName').touched && updateRelationFormModel.get('FullName').errors?.maxlength">Maximum 100 characters</label>
     </div>
     <div class="form-row">
       <div class="form-group col-md-3">
         <label>TelephoneNumber</label>
         <input class="form-control" formControlName="TelephoneNumber">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('TelephoneNumber').touched && updateRelationFormModel.get('TelephoneNumber').errors?.minlength">Minimum 2 characters</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('TelephoneNumber').touched && updateRelationFormModel.get('TelephoneNumber').errors?.maxlength">Maximum 15 characters</label>
       </div>
       <div class="form-group col-md-3">
         <label>EmailAddress</label>
         <input class="form-control" formControlName="EmailAddress">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('EmailAddress').touched && updateRelationFormModel.get('EmailAddress').errors?.email">Invalid email address</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('EmailAddress').touched && updateRelationFormModel.get('EmailAddress').errors?.maxlength">Maximum 50 characters</label>
       </div>
       <div class="form-group col-md-3">
         <label>Country</label>
         <input class="form-control" formControlName="Country">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Country').touched && updateRelationFormModel.get('Country').errors?.minlength">Minimum 2 characters</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Country').touched && updateRelationFormModel.get('Country').errors?.maxlength">Maximum 60 characters</label>
       </div>
       <div class="form-group col-md-3">
         <label>City</label>
         <input class="form-control" formControlName="City">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('City').touched && updateRelationFormModel.get('City').errors?.minlength">Minimum 2 characters</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('City').touched && updateRelationFormModel.get('City').errors?.maxlength">Maximum 60 characters</label>
       </div>
       <div class="form-group col-md-3">
         <label>PostalCode</label>
         <input class="form-control" formControlName="PostalCode">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('PostalCode').touched && updateRelationFormModel.get('PostalCode').errors?.minlength">Minimum 2 characters</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('PostalCode').touched && updateRelationFormModel.get('PostalCode').errors?.maxlength">Maximum 20 characters</label>
       </div>
       <div class="form-group col-md-3">
         <label>Street</label>
         <input class="form-control" formControlName="Street">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Street').touched && updateRelationFormModel.get('Street').errors?.minlength">Minimum 2 characters</label>
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('Street').touched && updateRelationFormModel.get('Street').errors?.maxlength">Maximum 100 characters</label>
       </div>
       <div class="form-group col-md-3">
         <label>StreetNumber</label>
         <input type="number" class="form-control" formControlName="StreetNumber">
+        <label class="text-danger" *ngIf="updateRelationFormModel.get('StreetNumber').touched && updateRelationFormModel.get('StreetNumber').errors?.minlength">Minimum 2 characters</label>
       </div>
     </div>
     <button type="submit" class="btn btn-lg">Update</button>

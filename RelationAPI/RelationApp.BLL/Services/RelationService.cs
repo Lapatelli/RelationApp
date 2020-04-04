@@ -50,6 +50,7 @@ namespace RelationApp.BLL.Services
             var relationAddressForUpdate = await _unitOfWork.RelationAddressRepository.GetAddressByRelationIdAsync(relation.Id);
             var postalCodeFormat = await _unitOfWork.CountryRepository.GetPostalCodeByCountryName(relationAddressForUpdate.CountryName);
 
+            relationForUpdate.Name = relation.Name;
             relationForUpdate.FullName = relation.FullName;
             relationForUpdate.TelephoneNumber = relation.TelephoneNumber;
             relationForUpdate.EmailAddress = relation.EmailAddress;
