@@ -1,0 +1,24 @@
+$baseTextColor: #020303;
+
+$titlesLarge: 56pt;
+$titlesMedium: 42pt;
+$titlesSmall: 36pt;
+
+$cardTitleSize: 26pt;
+
+$contentTextSizeMedium: 18pt;
+$contentTextSizeSmall: 16pt;
+$contentTextDescriptionSize: 20pt;
+
+$font15px: 300 normal 15px 'Merriweather', serif;
+
+@mixin transformTextStyle( $fontSize, $fontWeight: 400, $lineHeight: 1) {
+  font-family: 'Merriweather', serif;
+  font-style: normal;
+  color: $baseTextColor;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  font-size: $fontSize;
+}
+
+

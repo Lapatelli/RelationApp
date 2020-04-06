@@ -42,7 +42,10 @@ namespace RelationApp.Web
             services.AddScoped<IRelationAddressService, RelationAddressService>();
 
             services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+            services.AddCors();
 
             services.AddSwaggerGen(options =>
             {
@@ -63,6 +66,11 @@ namespace RelationApp.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:4500")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseMiddleware<ExceptionMiddleware>();
 

@@ -1,0 +1,50 @@
+<div class="dropdown top-indent">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Category
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <button class="dropdown-item" *ngFor="let category of categoriesArray" (click)="onSelectCategory(category.value)">{{category.name}}</button>
+  </div>
+</div>
+  <div>
+    <p class="text-font">Selected category: {{selectedCategory.name}}</p>
+  </div>
+<table class="table table-striped top-indent-table">
+    <thead>
+      <tr class="table-head">
+        <th scope="col"></th>
+        <th scope="col" (click)="onSort('Name')">Name</th>
+        <th scope="col"(click)="onSort('FullName')">FullName</th>
+        <th scope="col"(click)="onSort('TelephoneNumber')">TelephoneNumber</th>
+        <th scope="col"(click)="onSort('EmailAddress')">EmailAddress</th>
+        <th scope="col"(click)="onSort('CountryName')">Country</th>
+        <th scope="col" (click)="onSort('City')">City</th>
+        <th scope="col" (click)="onSort('PostalCode')">PostalCode</th>
+        <th scope="col" (click)="onSort('Street')">Street</th>
+        <th scope="col" (click)="onSort('StreetNumber')">StreetNumber</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let relation of relations$ | async">
+      <tr>
+        <div class="form-check">
+          <label class="form-check-label" for="relations">
+          <input type="checkbox" class="form-check-input" (change)="onToggle(relation.id)">
+          </label>
+        </div>
+        <td scope="row">{{relation.name}}</td>
+        <td scope="row">{{relation.fullName}}</td>
+        <td scope="row">{{relation.telephoneNumber}}</td>
+        <td scope="row">{{relation.emailAddress}}</td>
+        <td scope="row">{{relation.countryName}}</td>
+        <td scope="row">{{relation.city}}</td>
+        <td scope="row">{{relation.postalCode}}</td>
+        <td scope="row">{{relation.street}}</td>
+        <td scope="row">{{relation.streetNumber}}</td>
+        <div>
+          <button type="submit" class="btn btn-light" (click)="onNavigateToUpdate(relation)">Edit</button>
+        </div>
+      </tr>
+    </tbody>
+</table>
+<button class="btn btn-outline-dark button-position" role="button" (click)="onDelete()">Delete</button>
