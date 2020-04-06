@@ -24,17 +24,13 @@
     text-align: center;
 }
 
-.button-position {
-    margin-left: 40px;
-    margin-top: 10px;
-}
-
 .text-font {
     @include transformTextStyle(15px);
     margin: 0 5px;
     color: $primary-1;
     text-decoration: none;
 
-    margin-left: 200px;
+    margin-left: 40px;
 }
+
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import { RelationService } from '../services/relation.service';
@@ -15,13 +15,14 @@ import { Category } from 'src/app/shared/category';
   templateUrl: './relation-list.component.html',
   styleUrls: ['./relation-list.component.scss']
 })
-export class RelationListComponent implements OnInit {
+export class RelationListComponent implements OnInit, OnChanges {
 
   public relations$: Observable<Relation[]>;
   public relation: Relation;
   public relationsToDelete: DeleteRelation[] = [];
   public relationCheckingOptions = new Array<CheckBoxRelation>();
   public checkBoxRelation: CheckBoxRelation;
+  public deleteButtonShow: boolean = false;
 
   public category: string = null;
   public sortedProperty: string = 'Name';
@@ -31,6 +32,10 @@ export class RelationListComponent implements OnInit {
   public selectedCategory: Category = new Category();
 
   constructor(private router: Router, private service: RelationService, private fb: FormBuilder) { }
+
+  ngOnChanges(): void {
+    this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
+  }
 
   ngOnInit(): void {
 
@@ -75,12 +80,11 @@ export class RelationListComponent implements OnInit {
   onNavigateToUpdate(relation: Relation): void {
     const relationExtras: NavigationExtras = {
       queryParams: {
-        // tslint:disable-next-line: quotemark
-        // tslint:disable-next-line: object-literal-key-quotes
-        'relationToUpdate': JSON.stringify(relation)
+        'id': JSON.stringify(relation.id),
+        'relation': JSON.stringify(relation)
       }
     };
-    this.router.navigate(['/update'], relationExtras);
+    this.router.navigate(['update'], relationExtras);
   }
 
   onToggle(relationId: string): void {
@@ -94,7 +98,13 @@ export class RelationListComponent implements OnInit {
         checked: true
       });
     }
-    console.log(this.relationCheckingOptions);
+
+    if (this.relationCheckingOptions.find(x => x.checked === true)) {
+      this.deleteButtonShow = true;
+    }
+    else {
+      this.deleteButtonShow = false;
+    }
   }
 
   onDelete(): void {

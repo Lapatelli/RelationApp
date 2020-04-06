@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ModalContainerComponent } from './modal-containter.component';
 import { RelationListComponent } from './relation-list/relation-list.component';
-import { CreateRelationComponent } from './create-relation/create-relation.component';
-import { UpdateRelationComponent } from './update-relation/update-relation.component';
 
 
 const routes: Routes = [
-  { path: '', component: RelationListComponent },
-  { path: 'create', component: CreateRelationComponent },
-  { path: 'update', component: UpdateRelationComponent }
+  { path: '', component: RelationListComponent,
+    children: [
+      { path: 'create', component: ModalContainerComponent },
+      { path: 'update', component: ModalContainerComponent }
+    ]
+  }
 ];
 
 @NgModule({

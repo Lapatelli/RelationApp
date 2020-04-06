@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'relation',
+    path: '',
     loadChildren: () => import('./relation/relation.module').then(m => m.RelationModule),
   },
 ];
