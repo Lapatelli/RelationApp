@@ -1,3 +1,3 @@
 export const URLs = {
-    BaseUrl: 'https://localhost:44325/relations'
+    BaseUrl: 'https://localhost:44325'
 };

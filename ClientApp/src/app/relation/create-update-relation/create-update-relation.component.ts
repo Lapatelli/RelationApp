@@ -4,14 +4,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Relation } from 'src/app/shared/relation';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-create-relation',
-  templateUrl: './create-relation.component.html',
-  styleUrls: ['./create-relation.component.scss']
+  selector: 'app-create-update-relation',
+  templateUrl: './create-update-relation.component.html',
+  styleUrls: ['./create-update-relation.component.scss']
 })
-export class CreateRelationComponent implements OnInit, OnDestroy {
+export class CreateUpdateRelationComponent implements OnInit, OnDestroy {
 
   public createModel = true;
   public actionName = 'Create';
@@ -21,7 +20,14 @@ export class CreateRelationComponent implements OnInit, OnDestroy {
   public relation: Relation;
   destroy = new Subject<any>();
 
-  constructor(private router: Router, private service: RelationService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private router: Router, private service: RelationService, private fb: FormBuilder, private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.InitializeRelationModel();
+    this.CreateFormModel();
+  }
+
+  InitializeRelationModel(): void {
     this.route.queryParams.subscribe(params => {
       this.relationId = params.id;
       this.relationJSON = params.relation;
@@ -46,9 +52,9 @@ export class CreateRelationComponent implements OnInit, OnDestroy {
         streetNumber: null
         };
     }
-   }
+  }
 
-  ngOnInit(): void {
+  CreateFormModel(): void{
     this.relationFormModel = this.fb.group({
       Name: [this.relation.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       FullName: [this.relation.fullName, [Validators.minLength(2), Validators.maxLength(100)]],
@@ -72,14 +78,11 @@ export class CreateRelationComponent implements OnInit, OnDestroy {
   }
 
   onCreate(): void {
-    console.log(this.relationFormModel.value);
     this.service.createRelation(this.relationFormModel.value)
       .subscribe((res: any) => {
         this.router.navigateByUrl('/');
-      },
-      err =>
-        console.log(err)
-      );
+      });
+
     this.relationFormModel.reset();
     this.ngOnDestroy();
   }
@@ -87,12 +90,9 @@ export class CreateRelationComponent implements OnInit, OnDestroy {
   onEdit(): void {
     this.service.editRelation(this.relation.id, this.relationFormModel.value)
     .subscribe((res: any) => {
-        console.log('ok');
         this.router.navigateByUrl('/');
-    },
-    err =>
-      console.log(err)
-    );
+    });
+
     this.ngOnDestroy();
   }
 

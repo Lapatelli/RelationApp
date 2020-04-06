@@ -15,7 +15,6 @@ export class RelationService {
 
   public getRelations(category: string, sortedProperty: string, descending: boolean): Observable<Relation[]> {
     if (category === null) {
-      console.log(URLs.BaseUrl + '?propertyForSorting=' + sortedProperty + '&descending=' + descending);
       return this.httpClient.get<Relation[]>(URLs.BaseUrl + '?propertyForSorting=' + sortedProperty + '&descending=' + descending);
     }
     else {
@@ -28,8 +27,6 @@ export class RelationService {
   }
 
   public editRelation(relationId: string, relation: ICreateRelation): Observable<Relation> {
-    console.log(relationId);
-    console.log(relation);
     return this.httpClient.put<Relation>(URLs.BaseUrl + '/update/' + relationId, relation);
   }
 

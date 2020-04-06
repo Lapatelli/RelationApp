@@ -40,16 +40,18 @@ export class RelationListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.categoriesArray = new Array(
-      {name: 'Category_1', value: categories.Category_1},
-      {name: 'Category_2', value: categories.Category_2},
-      {name: 'Category_3', value: categories.Category_3},
-      {name: 'Category_4', value: categories.Category_4},
-      {name: 'Category_5', value: categories.Category_5},
-      {name: 'Category_6', value: categories.Category_6},
-      {name: 'Category_7', value: categories.Category_7},
-      {name: 'Category_8', value: categories.Category_8},
+      {name: 'Chauffeurs', value: categories.Chauffeurs},
+      {name: 'Opdrachtgevers', value: categories.Opdrachtgevers},
+      {name: 'Transporteurs', value: categories.Transporteurs},
+      {name: 'Crediteuren', value: categories.Crediteuren},
+      {name: 'Depots', value: categories.Depots},
+      {name: 'Gearchiveerde Relaties', value: categories.Gearchiveerde_Relaties},
+      {name: 'Laadadressen', value: categories.Laadadressen},
+      {name: 'Losadressen', value: categories.Losadressen},
       {name: 'All categories', value: null}
     );
+
+    this.selectedCategory = this.categoriesArray.find(x => x.name === 'All categories');
 
     this.sortedObject = {
       property: this.sortedProperty,
@@ -119,12 +121,7 @@ export class RelationListComponent implements OnInit, OnChanges {
 
     this.service.deleteRelations(this.relationsToDelete)
       .subscribe((res: any) => {
-        console.log('ok');
         this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
-    },
-    err =>
-      console.log(err)
-    );
+    });
   }
-
 }

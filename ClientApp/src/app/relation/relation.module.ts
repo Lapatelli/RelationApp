@@ -4,7 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RelationRoutingModule } from './relation-routing.module';
 import { RelationListComponent } from './relation-list/relation-list.component';
-import { CreateRelationComponent } from './create-relation/create-relation.component';
+import { CreateUpdateRelationComponent } from './create-update-relation/create-update-relation.component';
 import { RelationService } from './services/relation.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { ModalContainerComponent } from './modal-containter.component';
 @NgModule({
   declarations: [
     RelationListComponent,
-    CreateRelationComponent,
+    CreateUpdateRelationComponent,
     ModalContainerComponent,
   ],
   imports: [
