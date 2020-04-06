@@ -11,7 +11,7 @@ using RelationApp.Web.ViewModels;
 namespace RelationApp.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("")]
+    [Route("relations/")]
     [ApiController]
     public class RelationController : ControllerBase
     {
