@@ -1,11 +1,10 @@
-import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { RelationService } from '../services/relation.service';
 import { Relation } from 'src/app/shared/relation';
 import { categories } from 'src/app/shared/categories';
 import { DeleteRelation } from 'src/app/shared/relation-delete';
-import { FormBuilder} from '@angular/forms';
 import { CheckBoxRelation } from 'src/app/shared/check-box-relation';
 import { SortedObject } from 'src/app/shared/sorted-object';
 import { Category } from 'src/app/shared/category';
@@ -15,7 +14,7 @@ import { Category } from 'src/app/shared/category';
   templateUrl: './relation-list.component.html',
   styleUrls: ['./relation-list.component.scss']
 })
-export class RelationListComponent implements OnInit, OnChanges {
+export class RelationListComponent implements OnInit {
 
   public relations$: Observable<Relation[]>;
   public relation: Relation;
@@ -31,11 +30,13 @@ export class RelationListComponent implements OnInit, OnChanges {
   public categoriesArray: Array<Category>;
   public selectedCategory: Category = new Category();
 
-  constructor(private router: Router, private service: RelationService, private fb: FormBuilder) { }
-
-  ngOnChanges(): void {
-    this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
-  }
+  constructor(private router: Router, private service: RelationService, private route: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
+      }
+    });
+   }
 
   ngOnInit(): void {
 
@@ -57,8 +58,6 @@ export class RelationListComponent implements OnInit, OnChanges {
       property: this.sortedProperty,
       desc: this.descending
     };
-
-    this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
   }
 
   onSelectCategory(category: string): void {
@@ -86,6 +85,7 @@ export class RelationListComponent implements OnInit, OnChanges {
         'relation': JSON.stringify(relation)
       }
     };
+
     this.router.navigate(['update'], relationExtras);
   }
 

@@ -90,7 +90,7 @@ export class CreateUpdateRelationComponent implements OnInit, OnDestroy {
   onEdit(): void {
     this.service.editRelation(this.relation.id, this.relationFormModel.value)
     .subscribe((res: any) => {
-        this.router.navigateByUrl('/');
+      this.router.navigate(['/']);
     });
 
     this.ngOnDestroy();
