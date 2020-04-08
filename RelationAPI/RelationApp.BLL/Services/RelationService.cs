@@ -25,6 +25,13 @@ namespace RelationApp.BLL.Services
             return relationsSorted;
         }
 
+        public async Task<Relation> GetRelationByIdAsync(Guid? relationId)
+        {
+            var relation = await _unitOfWork.RelationRepository.GetRelationByIdAsync(relationId);
+
+            return relation;
+        }
+
         public async Task<Relation> CreateRelationAsync(Relation relation,RelationAddress relationAddress, RelationCategory relationCategory)
         {
             var postalCodeFormat = await _unitOfWork.CountryRepository.GetPostalCodeByCountryName(relationAddress.CountryName);

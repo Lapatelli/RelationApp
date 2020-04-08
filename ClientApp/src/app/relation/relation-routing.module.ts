@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: RelationListComponent,
     children: [
       { path: 'create', component: ModalContainerComponent },
-      { path: 'update', component: ModalContainerComponent }
+      { path: 'update/:id', component: ModalContainerComponent }
     ]
   }
 ];

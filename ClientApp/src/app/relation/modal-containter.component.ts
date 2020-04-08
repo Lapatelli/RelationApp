@@ -16,6 +16,7 @@ export class ModalContainerComponent implements OnDestroy {
   constructor(private modalService: NgbModal, route: ActivatedRoute, router: Router) {
     route.paramMap.pipe(takeUntil(this.destroy)).subscribe(params => {
       this.currentDialog = this.modalService.open(CreateUpdateRelationComponent, {centered: true});
+      this.currentDialog.componentInstance.relationId = params.get('id');
 
       this.currentDialog.result.then(result => {
         router.navigateByUrl('/');

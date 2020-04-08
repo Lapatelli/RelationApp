@@ -79,14 +79,7 @@ export class RelationListComponent implements OnInit {
   }
 
   onNavigateToUpdate(relation: Relation): void {
-    const relationExtras: NavigationExtras = {
-      queryParams: {
-        'id': JSON.stringify(relation.id),
-        'relation': JSON.stringify(relation)
-      }
-    };
-
-    this.router.navigate(['update'], relationExtras);
+    this.router.navigate(['update/' + relation.id]);
   }
 
   onToggle(relationId: string): void {

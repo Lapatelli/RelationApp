@@ -47,6 +47,21 @@ namespace RelationApp.Web.Controllers
         }
 
         /// <summary>
+        /// Returns relation with certain Id which is not Disabled
+        /// </summary>
+        /// <param name="relationId"></param>
+        /// <returns></returns>
+        [HttpGet, Route("{relationId}")]
+        public async Task<IActionResult> GetRelationByIdAsync([FromRoute] Guid? relationId)
+        {
+            var relation = await _relationService.GetRelationByIdAsync(relationId);
+
+            var relationViewModel = _mapper.Map<Relation, GetRelationViewModel>(relation);
+
+            return Ok(relationViewModel);
+        }
+
+        /// <summary>
         /// Create relation instance in a database, herewith adding information in all related tables.
         /// RandomCategoryId is added for Unit-Tests. After creating UI, there will be Dropdown menu to choose right category
         /// </summary>

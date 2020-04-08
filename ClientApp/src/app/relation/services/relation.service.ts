@@ -22,6 +22,10 @@ export class RelationService {
     }
   }
 
+  public getRelation(relationId: string): Observable<Relation> {
+    return this.httpClient.get<Relation>(URLs.BaseUrl + 'relations/' + relationId);
+  }
+
   public createRelation(relation: ICreateRelation): Observable<Relation> {
     return this.httpClient.post<Relation>(URLs.BaseUrl + 'relations/create', relation);
   }
