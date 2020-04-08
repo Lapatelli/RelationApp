@@ -15,7 +15,8 @@ namespace RelationApp.Infrastructure.Repositories
 
         public async Task<Relation> GetRelationByIdAsync(Guid? relationId)
         {
-            var entity = await DbSet.FirstOrDefaultAsync(e => e.Id == relationId);
+            var entity = await DbSet.Where(r => !r.IsDisabled).Include(r => r.RelationAddress)
+                .FirstOrDefaultAsync(r => r.Id == relationId);
 
             return entity;
         }

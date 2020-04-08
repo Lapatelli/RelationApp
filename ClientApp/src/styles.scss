@@ -1,148 +1,78 @@
-@import 'styles/colors';
-@import 'styles/typography';
 
-$borderRadius: 5px;
-
-@mixin shadow() {
-    box-shadow: 0 10px 15px rgba(5, 31, 43, .05);
-}
-
-@mixin form-wrapper($showShadow) {
-    @if $showShadow {
-        @include shadow();
-    };
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
-    background-color: #fff;
-    box-sizing: border-box;
-}
-
-@mixin alignCenter() {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-a {
-    color: #0366d6;
-    outline: none;
-}
 
 button:focus {
     outline: none !important;
 }
 
-code {
-    color: #e01a76;
+.checkbox-align {
+    margin-left: 15px;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
+div.form-group label:not(.text-danger){
 
-.application-content {
-    padding-top: 100px;
-}
-
-body .ui-dropdown {
-    min-width: 0;
-}
-
-.auth-page-form {
-    @include form-wrapper(true);
-}
-
-.create-session-form.create-issue-form {
-    @include form-wrapper(false);
-}
-
-.form-fieldset {
-    position: relative;
-}
-
-.form-fieldset:not(:last-of-type) {
-    margin-bottom: 25px;
-}
-
-::ng-deep .ui-corner-all {
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-}
-
-::ng-deep .ui-table .ui-table-tbody > tr > td {
-    word-wrap: break-word !important;
-    //font: $font15px;
-}
-
-.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
-    padding: 0 !important;
-    width: 30px !important;
-    height: 10px !important;
-    line-height: 2 !important;
-}
-
-.mat-button-toggle-label-content {
-    padding: 0 !important;
-}
-
-.mat-button-toggle {
-    height: 30px !important;
-}
-
-.empty-table {
-    width: 100%;
-
-    tr {
-        border: 1px solid $complementary-4;
-        border-top: none;
-    }
-
-    td {
-        padding: 10px;
-        text-align: center;
-        font: $font15px;
-    }
-}
-
-.menu-item-logout {
-    font: 400 normal 14px/16px "Roboto", sans-serif;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    color:  #020303;
+    font-weight: 700;
     text-decoration: none;
-    color: #020303;
-    padding: 15px 30px;
-    cursor: pointer;
+    font-size: 15px;
+    margin: 0 5px;
 }
 
-::ng-deep {
-    .ui-button {
-        background-color: $primary-2 !important;
-        border: 1px solid $primary-2 !important;
-    }
+div.form-group.required>label:first-child:after{
+    content:'*';
+    color: #fff;
+    padding-left: 5px;
+}
 
-    .ui-button:enabled:focus {
-        box-shadow: none !important;
-    }
+ div.form-group input.invalid{
+    border: 1px solid #b00505; 
+ }
+ 
+ div.form-group label:first-child{
+    text-transform: uppercase;
+    font-size: 0.9rem;
+ }
 
-    .ui-dialog-titlebar {
-        background-color: $primary-2 !important;
-        color: white !important;
-    }
+ .margin-button {
+    margin-left: 370px;
+}
 
-    .ui-dialog-titlebar-icon span {
-        color: white !important;
-    }
+.table-align-number {
+    text-align: center;
+}
 
-    .ui-dialog-content,
-    .ui-dialog-titlebar,
-    .ui-dialog-footer {
-        border: none !important;
-    }
+.top-indent {
+    margin-top: 100px;
+    margin-left: 20px;
+}
 
-    .ui-widget {
-        font-family: "Roboto", sans-serif !important;
-        font-weight: 300 !important;
-    }
+.top-indent-table {
+    margin-top: 30px;
+}
+
+.table-head {
+    cursor: pointer;
+
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    color:  #020303;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 22px;
+    margin: 0 5px;
+    text-decoration: none;
+}
+
+.text-font {
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    color:  #020303;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 15px;
+    margin: 0 5px;
+    text-decoration: none;
+
+    margin-left: 40px;
 }

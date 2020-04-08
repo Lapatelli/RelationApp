@@ -2,39 +2,11 @@
 @import '../../../styles/typography';
 @import '../../../styles';
 
-.top-indent {
-    margin-top: 100px;
-    margin-left: 20px;
+td {
+    vertical-align: middle;
 }
 
-.top-indent-table {
-    margin-top: 30px;
-    margin-left: 30px;
+td a, td input, td img, td label {
+    vertical-align: middle;
+    display: inline-block;
 }
-
-.table-head {
-    cursor: pointer;
-
-    @include transformTextStyle(24px);
-    color: $primary-1;
-    text-decoration: none;
-}
-
-.align-element {
-    text-align: center;
-}
-
-.button-position {
-    margin-left: 40px;
-    margin-top: 10px;
-}
-
-.text-font {
-    @include transformTextStyle(15px);
-    margin: 0 5px;
-    color: $primary-1;
-    text-decoration: none;
-
-    margin-left: 200px;
-}
-

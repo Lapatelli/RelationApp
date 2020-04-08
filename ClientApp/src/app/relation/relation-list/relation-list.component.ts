@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { RelationService } from '../services/relation.service';
 import { Relation } from 'src/app/shared/relation';
 import { categories } from 'src/app/shared/categories';
 import { DeleteRelation } from 'src/app/shared/relation-delete';
-import { FormBuilder} from '@angular/forms';
 import { CheckBoxRelation } from 'src/app/shared/check-box-relation';
 import { SortedObject } from 'src/app/shared/sorted-object';
 import { Category } from 'src/app/shared/category';
@@ -22,6 +21,7 @@ export class RelationListComponent implements OnInit {
   public relationsToDelete: DeleteRelation[] = [];
   public relationCheckingOptions = new Array<CheckBoxRelation>();
   public checkBoxRelation: CheckBoxRelation;
+  public deleteButtonShow: boolean = false;
 
   public category: string = null;
   public sortedProperty: string = 'Name';
@@ -30,27 +30,34 @@ export class RelationListComponent implements OnInit {
   public categoriesArray: Array<Category>;
   public selectedCategory: Category = new Category();
 
-  constructor(private router: Router, private service: RelationService, private fb: FormBuilder) { }
+  constructor(private router: Router, private service: RelationService, private route: ActivatedRoute) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
+      }
+    });
+   }
 
   ngOnInit(): void {
 
     this.categoriesArray = new Array(
-      {name: 'Category_1', value: categories.Category_1},
-      {name: 'Category_2', value: categories.Category_2},
-      {name: 'Category_3', value: categories.Category_3},
-      {name: 'Category_4', value: categories.Category_4},
-      {name: 'Category_5', value: categories.Category_5},
-      {name: 'Category_6', value: categories.Category_6},
-      {name: 'Category_7', value: categories.Category_7},
-      {name: 'Category_8', value: categories.Category_8},
+      {name: 'Chauffeurs', value: categories.Chauffeurs},
+      {name: 'Opdrachtgevers', value: categories.Opdrachtgevers},
+      {name: 'Transporteurs', value: categories.Transporteurs},
+      {name: 'Crediteuren', value: categories.Crediteuren},
+      {name: 'Depots', value: categories.Depots},
+      {name: 'Gearchiveerde Relaties', value: categories.Gearchiveerde_Relaties},
+      {name: 'Laadadressen', value: categories.Laadadressen},
+      {name: 'Losadressen', value: categories.Losadressen},
+      {name: 'All categories', value: null}
     );
+
+    this.selectedCategory = this.categoriesArray.find(x => x.name === 'All categories');
 
     this.sortedObject = {
       property: this.sortedProperty,
       desc: this.descending
     };
-
-    this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
   }
 
   onSelectCategory(category: string): void {
@@ -72,14 +79,7 @@ export class RelationListComponent implements OnInit {
   }
 
   onNavigateToUpdate(relation: Relation): void {
-    const relationExtras: NavigationExtras = {
-      queryParams: {
-        // tslint:disable-next-line: quotemark
-        // tslint:disable-next-line: object-literal-key-quotes
-        'relationToUpdate': JSON.stringify(relation)
-      }
-    };
-    this.router.navigate(['/update'], relationExtras);
+    this.router.navigate(['update/' + relation.id]);
   }
 
   onToggle(relationId: string): void {
@@ -93,7 +93,13 @@ export class RelationListComponent implements OnInit {
         checked: true
       });
     }
-    console.log(this.relationCheckingOptions);
+
+    if (this.relationCheckingOptions.find(x => x.checked === true)) {
+      this.deleteButtonShow = true;
+    }
+    else {
+      this.deleteButtonShow = false;
+    }
   }
 
   onDelete(): void {
@@ -108,12 +114,7 @@ export class RelationListComponent implements OnInit {
 
     this.service.deleteRelations(this.relationsToDelete)
       .subscribe((res: any) => {
-        console.log('ok');
         this.relations$ = this.service.getRelations(this.category, this.sortedProperty, this.descending);
-    },
-    err =>
-      console.log(err)
-    );
+    });
   }
-
 }

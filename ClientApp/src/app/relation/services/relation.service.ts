@@ -15,25 +15,26 @@ export class RelationService {
 
   public getRelations(category: string, sortedProperty: string, descending: boolean): Observable<Relation[]> {
     if (category === null) {
-      console.log(URLs.BaseUrl + '?propertyForSorting=' + sortedProperty + '&descending=' + descending);
-      return this.httpClient.get<Relation[]>(URLs.BaseUrl + '?propertyForSorting=' + sortedProperty + '&descending=' + descending);
+      return this.httpClient.get<Relation[]>(URLs.BaseUrl + 'relations/?propertyForSorting=' + sortedProperty + '&descending=' + descending);
     }
     else {
-      return this.httpClient.get<Relation[]>(URLs.BaseUrl + '?categoryId=' + category + '&propertyForSorting=' + sortedProperty + '&descending=' + descending);
+      return this.httpClient.get<Relation[]>(URLs.BaseUrl + 'relations/?categoryId=' + category + '&propertyForSorting=' + sortedProperty + '&descending=' + descending);
     }
+  }
+
+  public getRelation(relationId: string): Observable<Relation> {
+    return this.httpClient.get<Relation>(URLs.BaseUrl + 'relations/' + relationId);
   }
 
   public createRelation(relation: ICreateRelation): Observable<Relation> {
-    return this.httpClient.post<Relation>(URLs.BaseUrl + '/create', relation);
+    return this.httpClient.post<Relation>(URLs.BaseUrl + 'relations/create', relation);
   }
 
   public editRelation(relationId: string, relation: ICreateRelation): Observable<Relation> {
-    console.log(relationId);
-    console.log(relation);
-    return this.httpClient.put<Relation>(URLs.BaseUrl + '/update/' + relationId, relation);
+    return this.httpClient.put<Relation>(URLs.BaseUrl + 'relations/update/' + relationId, relation);
   }
 
   public deleteRelations(relationArray: DeleteRelation[]): Observable<any> {
-    return this.httpClient.put<any>(URLs.BaseUrl + '/delete', relationArray);
+    return this.httpClient.put<any>(URLs.BaseUrl + 'relations/delete', relationArray);
   }
 }

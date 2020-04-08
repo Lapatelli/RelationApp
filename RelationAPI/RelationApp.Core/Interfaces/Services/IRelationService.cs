@@ -9,6 +9,8 @@ namespace RelationApp.Core.Interfaces.Services
     {
         Task<IEnumerable<Relation>> GetSortedRelationsByCategotyIdAsync(Guid? categoryId, string propertyForSorting, bool descending);
 
+        Task<Relation> GetRelationByIdAsync(Guid? relationId);
+
         Task<Relation> CreateRelationAsync(Relation relation,RelationAddress relationAddress, RelationCategory relationCategory);
 
         Task DeleteCertainRelationsByMakingDisabled(IEnumerable<Relation> relations);

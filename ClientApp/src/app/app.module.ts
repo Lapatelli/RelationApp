@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { RelationModule } from './relation/relation.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { DialogModule, DialogService, DropdownModule, DynamicDialogModule, OverlayPanelModule } from 'primeng';
+import {DialogService} from 'primeng';
 
 @NgModule({
   declarations: [
@@ -20,10 +20,6 @@ import { DialogModule, DialogService, DropdownModule, DynamicDialogModule, Overl
     RelationModule,
     HttpClientModule,
     FormsModule,
-    DynamicDialogModule,
-    DialogModule,
-    DropdownModule,
-    OverlayPanelModule
   ],
   providers: [DialogService],
   bootstrap: [AppComponent]
